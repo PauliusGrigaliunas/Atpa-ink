@@ -1,14 +1,14 @@
 package pg.grigaliunas.paulius.atpaink10;
 
-import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageObject imageObject;
+    DatabaseHelper mydb;
     Button saveButton;
     ImageView imageView;
     FloatingActionButton fab;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mydb = new DatabaseHelper(this);
         saveButton = (Button) findViewById(R.id.btnSave);
         imageView = (ImageView) findViewById(R.id.imageView);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 imageObject = new ImageObject( System.currentTimeMillis() , 7 , bitmap);
+        mydb.insert(imageObject);
             }
         });
 
@@ -111,22 +114,29 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        Fragment fragment = null;
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 0);
         } else if (id == R.id.nav_gallery) {
-
+            fragment = new ItemFragment();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            fragment = new Info();
 
         } else if (id == R.id.nav_send) {
+            fragment = new BlankFragment();
+        }
 
+        if (fragment != null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.screen_area, fragment);
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

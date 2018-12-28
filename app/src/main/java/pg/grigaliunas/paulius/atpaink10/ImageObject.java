@@ -22,10 +22,7 @@ public class ImageObject {
     public String getID(){
         return ID;
     }
-
-    public long getDate(){
-        return date;
-    }
+    public long getDate(){ return date;}
     public int getPrediction(){
         return prediction;
     }

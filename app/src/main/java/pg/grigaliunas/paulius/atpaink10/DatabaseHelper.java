@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertTaskData(ImageObject imageObject ){
+    public boolean insert(ImageObject imageObject ){
 
         byte[] data = getBitmapAsByteArray(imageObject.getImage());
         ContentValues contentValues = new ContentValues();
