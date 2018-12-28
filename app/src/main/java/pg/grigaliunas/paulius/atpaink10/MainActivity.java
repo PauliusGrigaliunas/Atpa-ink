@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity
 
     ImageObject imageObject;
     Button saveButton;
-    ImageView imageView;
-    FloatingActionButton fab;
+    //ImageView imageView;
     Bitmap bitmap;
 
     @Override
@@ -39,25 +38,17 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+/*
         saveButton = (Button) findViewById(R.id.btnSave);
-        imageView = (ImageView) findViewById(R.id.imageView);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        imageView = (ImageView) findViewById(R.id.imageView);*/
 
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 0);
-            }
-        });
-
+/*
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageObject = new ImageObject( System.currentTimeMillis() , 7 , bitmap);
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,12 +63,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         bitmap = (Bitmap) data.getExtras().get("data");
-        imageView.setImageBitmap(bitmap);
+
+
+        Fragment fragment = new HomeFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment).commit();
+        ((HomeFragment) fragment).bitmap = bitmap;
+        //((HomeFragment) fragment).imageView.setImageBitmap(bitmap);
 
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -117,9 +114,11 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 0);
+        if (id == R.id.nav_home) {
+            fragment = new HomeFragment();
+        } else if (id == R.id.nav_camera) {
+            fragment = new HomeFragment();
+            ((HomeFragment) fragment).start();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -127,7 +126,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
             fragment = new InfoFragment();
         } else if (id == R.id.nav_send) {
 
