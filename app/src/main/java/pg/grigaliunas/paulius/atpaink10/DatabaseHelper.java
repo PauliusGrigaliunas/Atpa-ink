@@ -1,10 +1,17 @@
 package pg.grigaliunas.paulius.atpaink10;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.CharArrayBuffer;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
 
 import java.io.ByteArrayOutputStream;
 
@@ -64,6 +71,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean delete(ImageObject imageObject ) {
         int result = db.delete(Table_Gallery, Col_ID  + "=" + imageObject.getID(), null);
         return (result == 0) ? false : true;
+    }
+
+    public Cursor showAll(){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Gallery , null);
+        return cursor;
     }
 }
 
