@@ -52,10 +52,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         saveButton = (Button) view.findViewById(R.id.btnSave);
-        imageView = (ImageView) view.findViewById(R.id.imageView);
-
-
-
+        imageView = (ImageView) view.findViewById(R.id.imageView4);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +61,6 @@ public class HomeFragment extends Fragment {
 
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 getActivity().startActivityForResult(intent, 0);
-
-
 
             }
         });
@@ -89,7 +84,7 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         bitmap = (Bitmap) data.getExtras().get("data");
-        imageView.setImageBitmap(bitmap);
+        ((ImageView)imageView.findViewById(R.id.image)).setImageBitmap(bitmap);
 
     }
 
