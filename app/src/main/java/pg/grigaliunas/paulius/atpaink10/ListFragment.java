@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class ListFragment extends Fragment {
 
     private DatabaseHelper mydb;
     private ListView listView;
+    private ImageView imageView;
     private FloatingActionButton fab;
 
     private ArrayList arrayList;
