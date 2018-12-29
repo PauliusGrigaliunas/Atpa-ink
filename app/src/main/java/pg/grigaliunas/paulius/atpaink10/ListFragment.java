@@ -47,6 +47,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
+        mydb = new DatabaseHelper(getActivity());
         showList();
         return view;
     }
