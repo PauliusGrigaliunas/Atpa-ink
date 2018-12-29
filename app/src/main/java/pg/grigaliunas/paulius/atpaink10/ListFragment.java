@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.service.autofill.UserData;
@@ -32,9 +34,11 @@ public class ListFragment extends Fragment {
     private FloatingActionButton fab;
 
     private ArrayList arrayList;
-    private HashMap<String, Object> hmap;
+    private HashMap<String, String> hmap;
 
     private TextView textView;
+
+    int flags = R.drawable.ic_menu_camera;
 
     public ListFragment() {
         // Required empty public constructor
@@ -72,12 +76,18 @@ public class ListFragment extends Fragment {
 
             while(c.moveToNext())
             {
-                hmap= new HashMap<String, Object>();
+                hmap= new HashMap<String, String>();
                 hmap.put("id", c.getString(0));
-                hmap.put("name", c.getString(1));
-                byte[] byteArray = c.getBlob(3);
-                hmap.put("points", BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length));
+                hmap.put("name", " prediction: " + c.getString(2));
+                hmap.put("points",  Integer.toString(flags));
+               /* byte[] byteArray = c.getBlob(3);
+                Drawable did = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length).toString());
+                hmap.put("points", did.toString());*/
+
+
                 arrayList.add(hmap);
+
+                //imageView.setImageBitmap(bitmap);
             }
         }
         catch(Exception e){
@@ -95,11 +105,11 @@ public class ListFragment extends Fragment {
                 from, to );
 
         listView.setAdapter(adapter);
-        //selectItemFromList();
+        selectItemFromList();
     }
 
 
-    /*private void selectItemFromList(){
+    private void selectItemFromList(){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -111,14 +121,14 @@ public class ListFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt("data",name);
 
-                Fragment fragment = new ChildInfoFragment();
+                Fragment fragment = new ImageAnalysisFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, fragment);
+                ft.replace(R.id.frame_container, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
             }
         });
-    }*/
+    }
 
 }

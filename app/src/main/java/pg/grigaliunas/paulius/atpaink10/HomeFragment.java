@@ -1,35 +1,23 @@
 package pg.grigaliunas.paulius.atpaink10;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 public class HomeFragment extends Fragment {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
@@ -38,7 +26,7 @@ public class HomeFragment extends Fragment {
     private DatabaseHelper mydb;
     private Button NamBarBtnVar;
     private Toolbar toolbar;
-    private Bitmap bitmap;
+    private Bitmap bitmap1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +39,7 @@ public class HomeFragment extends Fragment {
         imageView = (ImageView) rootView.findViewById(R.id.imageView4);
         NamBarBtnVar = new Button(getActivity());
         changeToolBar();
-        saveObject();
+
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,6 +51,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        saveObject();
         return rootView;
 
     }
@@ -80,10 +69,10 @@ public class HomeFragment extends Fragment {
 
                 // convert byte array to Bitmap
 
-                bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
+                bitmap1 = BitmapFactory.decodeByteArray(byteArray, 0,
                         byteArray.length);
 
-                imageView.setImageBitmap(bitmap);
+                imageView.setImageBitmap(bitmap1);
 
             }
         }
@@ -105,7 +94,7 @@ public class HomeFragment extends Fragment {
         NamBarBtnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageObject image = new ImageObject( System.currentTimeMillis() , 5 , bitmap );
+                ImageObject image = new ImageObject( System.currentTimeMillis() , 5 , bitmap1);
                 if(mydb.insertTaskData(image)){
                     Snackbar.make(v, "Picture was saved", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
