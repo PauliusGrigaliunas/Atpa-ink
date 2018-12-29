@@ -2,6 +2,8 @@ package pg.grigaliunas.paulius.atpaink10;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.service.autofill.UserData;
@@ -30,7 +32,7 @@ public class ListFragment extends Fragment {
     private FloatingActionButton fab;
 
     private ArrayList arrayList;
-    private HashMap<String, String> hmap;
+    private HashMap<String, Object> hmap;
 
     private TextView textView;
 
@@ -70,10 +72,11 @@ public class ListFragment extends Fragment {
 
             while(c.moveToNext())
             {
-                hmap= new HashMap<String, String>();
+                hmap= new HashMap<String, Object>();
                 hmap.put("id", c.getString(0));
                 hmap.put("name", c.getString(1));
-                hmap.put("points",c.getString(2));
+                byte[] byteArray = c.getBlob(3);
+                hmap.put("points", BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length));
                 arrayList.add(hmap);
             }
         }
@@ -83,7 +86,7 @@ public class ListFragment extends Fragment {
         }
 
         String from[]={"id","name","points"};
-        int to[] = {R.id.idText, R.id.taskText, R.id.pointText};
+        int to[] = {R.id.idText, R.id.taskText, R.id.imageView2};
 
         SimpleAdapter adapter = new SimpleAdapter(
                 getContext(),
