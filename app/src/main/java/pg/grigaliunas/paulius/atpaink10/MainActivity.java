@@ -1,5 +1,6 @@
 package pg.grigaliunas.paulius.atpaink10;
 
+import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override

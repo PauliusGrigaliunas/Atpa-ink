@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -52,6 +53,9 @@ public class HomeFragment extends Fragment {
         });
 
         saveObject();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.commit();
         return rootView;
 
     }
@@ -94,14 +98,19 @@ public class HomeFragment extends Fragment {
         NamBarBtnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageObject image = new ImageObject( System.currentTimeMillis() , 5 , bitmap1);
-                if(mydb.insertTaskData(image)){
-                    Snackbar.make(v, "Picture was saved", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(bitmap1 != null){
+                    ImageObject image = new ImageObject( System.currentTimeMillis() , 5 , bitmap1);
+                    if(mydb.insertTaskData(image)){
+                        Snackbar.make(v, "Picture was saved", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                    else
+                        Snackbar.make(v, "Picture was't saved", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                 }
                 else
-                    Snackbar.make(v, "Picture was't saved", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                    Snackbar.make(v, "Picture was't insered", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
             }
         });
     }
