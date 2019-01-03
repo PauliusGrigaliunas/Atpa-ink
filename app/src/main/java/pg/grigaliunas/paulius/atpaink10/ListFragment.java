@@ -78,8 +78,8 @@ public class ListFragment extends Fragment {
             {
                 hmap= new HashMap<String, String>();
                 hmap.put("id", c.getString(0));
-                hmap.put("name", " prediction: " + c.getString(2));
-                hmap.put("points",  Integer.toString(flags));
+                hmap.put("prediction", " prediction: " + c.getString(2));
+                hmap.put("image",  Integer.toString(flags));
                /* byte[] byteArray = c.getBlob(3);
                 Drawable did = new BitmapDrawable(getResources(),BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length).toString());
                 hmap.put("points", did.toString());*/
@@ -95,7 +95,7 @@ public class ListFragment extends Fragment {
 
         }
 
-        String from[]={"id","name","points"};
+        String from[]={"id","prediction","image"};
         int to[] = {R.id.idText, R.id.taskText, R.id.imageView2};
 
         SimpleAdapter adapter = new SimpleAdapter(

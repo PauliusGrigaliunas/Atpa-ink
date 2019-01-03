@@ -67,6 +67,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
         return outputStream.toByteArray();
     }
+    public Cursor getImageById(int id ){
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + Table_Gallery + " Where " + Col_ID + " = " + id , null);
+        return cursor;
+    }
 
     public boolean delete(ImageObject imageObject ) {
         int result = db.delete(Table_Gallery, Col_ID  + "=" + imageObject.getID(), null);
